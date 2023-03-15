@@ -1,0 +1,177 @@
+[gd_scene load_steps=19 format=3 uid="uid://docmt00i2hqho"]
+
+[ext_resource type="PackedScene" uid="uid://c84gbgpxnrodg" path="res://player.tscn" id="1_82vot"]
+[ext_resource type="Script" path="res://main.gd" id="1_av2be"]
+[ext_resource type="PackedScene" uid="uid://6p4dve1775kk" path="res://mob.tscn" id="2_gq3ed"]
+[ext_resource type="FontFile" uid="uid://d0oi5g83um6wi" path="res://fonts/Montserrat-Medium.ttf" id="3_7n3t1"]
+[ext_resource type="Script" path="res://ScoreLabel.gd" id="4_h01bn"]
+[ext_resource type="Script" path="res://ComboLabel.gd" id="5_565m0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2g50t"]
+sky_top_color = Color(0.615686, 0.00392157, 0.94902, 1)
+sky_horizon_color = Color(0.703921, 0.54323, 0.770505, 1)
+ground_horizon_color = Color(0.703921, 0.54323, 0.770505, 1)
+
+[sub_resource type="Sky" id="Sky_mruyy"]
+sky_material = SubResource("ProceduralSkyMaterial_2g50t")
+
+[sub_resource type="Environment" id="Environment_2dtxh"]
+background_mode = 2
+sky = SubResource("Sky_mruyy")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="FontVariation" id="FontVariation_6eyor"]
+base_font = ExtResource("3_7n3t1")
+
+[sub_resource type="Theme" id="Theme_md500"]
+default_font = SubResource("FontVariation_6eyor")
+
+[sub_resource type="Theme" id="Theme_fqfdp"]
+default_font = ExtResource("3_7n3t1")
+default_font_size = 32
+
+[sub_resource type="Theme" id="Theme_0gnpu"]
+default_font = ExtResource("3_7n3t1")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffcch"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xyv4u"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmrm7"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kyo81"]
+material = SubResource("StandardMaterial3D_mmrm7")
+
+[sub_resource type="Curve3D" id="Curve3D_te1jj"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -10.9814, 0, -17.5626, 0, 0, 0, 0, 0, 0, 10.9613, 0, -17.5626, 0, 0, 0, 0, 0, 0, 10.8958, 0, 19.5107, 0, 0, 0, 0, 0, 0, -10.9814, 0, 19.7072, 0, 0, 0, 0, 0, 0, -11.0796, 0, -10.03, 0, 0, 0, 0, 0, 0, -10.9814, 0, -17.5626),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[node name="Main" type="Node"]
+script = ExtResource("1_av2be")
+mob_scene = ExtResource("2_gq3ed")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2dtxh")
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_md500")
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="RetryLabel" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.5
+offset_top = -12.0
+offset_right = 80.5
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_fqfdp")
+text = "Press Enter to Retry	"
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_right = 87.0
+offset_bottom = 47.0
+theme_override_colors/font_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+text = "Score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_h01bn")
+
+[node name="ComboLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 104.0
+offset_bottom = 80.0
+theme = SubResource("Theme_0gnpu")
+theme_override_colors/font_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+text = "Combo: x0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_565m0")
+
+[node name="Player" parent="." groups=["mob"] instance=ExtResource("1_82vot")]
+collision_mask = 5
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ffcch")
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_xyv4u")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.530943, 0.667476, -0.522087, 0.0715444, 0.578591, 0.812474, 0.844382, -0.46873, 0.259445, 0, 4, 0)
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_transmittance_bias = -5.131
+shadow_blur = 0.2
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+
+[node name="Camera" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 16, 10)
+projection = 1
+current = true
+size = 30.9343
+
+[node name="Cylinders" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, 11, 0.5, 19.6293)
+mesh = SubResource("CylinderMesh_kyo81")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, -11, 0.5, 19.6293)
+mesh = SubResource("CylinderMesh_kyo81")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, 11, 0.5, -17.5883)
+mesh = SubResource("CylinderMesh_kyo81")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, -11, 0.5, -17.5883)
+mesh = SubResource("CylinderMesh_kyo81")
+
+[node name="SpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_te1jj")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.9814, 0, -17.5626)
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]

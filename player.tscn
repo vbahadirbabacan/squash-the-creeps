@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://c84gbgpxnrodg"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_ct62h"]
+[ext_resource type="PackedScene" uid="uid://bt5ugrjv3r6hv" path="res://art/player.glb" id="1_vrj62"]
+[ext_resource type="Animation" uid="uid://d0foneqcruydx" path="res://fleet.res" id="3_navo1"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gndqe"]
+_data = {
+"fleet": ExtResource("3_navo1")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kpbht"]
+radius = 1.04829
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fb1fs"]
+height = 0.25475
+radius = 1.03119
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_ct62h")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Character" parent="Pivot" instance=ExtResource("1_vrj62")]
+transform = Transform3D(1, 0, 0, 0, 0.987688, 0.156434, 0, -0.156434, 0.987688, 0, 0.35, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/Character"]
+autoplay = "fleet"
+libraries = {
+"": SubResource("AnimationLibrary_gndqe")
+}
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.162038, 0)
+shape = SubResource("SphereShape3D_kpbht")
+
+[node name="MobDetector" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.136652, 0)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MobDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0256224, 0.313448, -0.0427039)
+shape = SubResource("CylinderShape3D_fb1fs")
+
+[connection signal="body_entered" from="MobDetector" to="." method="_on_mob_detector_body_entered"]

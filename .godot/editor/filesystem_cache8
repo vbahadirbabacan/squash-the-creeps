@@ -1,0 +1,27 @@
+2a60927148abd1d33b818b535e306557
+::res://::1678878029
+ComboLabel.gd::GDScript::-1::1678826560::0::1::::<>Label<>::
+default_bus_layout.tres::AudioBusLayout::-1::1676829547::0::1::::<><>::
+default_env.tres::Environment::-1::1676829547::0::1::::<><>::
+fleet.res::Animation::8925178518944579533::1678804418::0::1::::<><>::
+icon.png::CompressedTexture2D::231651123711456577::1606009720::1676829581::1::::<><>::
+main.gd::GDScript::-1::1678619755::0::1::::<>Node<>::
+main.tscn::PackedScene::8146798503620989028::1678877783::0::1::::<><>::uid://c84gbgpxnrodg<>res://main.gd<>uid://6p4dve1775kk<>uid://d0oi5g83um6wi<>res://ScoreLabel.gd<>res://ComboLabel.gd
+Mob.gd::GDScript::-1::1678804486::0::1::::<>CharacterBody3D<>::
+mob.tscn::PackedScene::2208587079656789910::1678877783::0::1::::<><>::res://Mob.gd<>uid://7q2q0opgc840
+music_player.tscn::PackedScene::564881486512158014::1678877783::0::1::::<><>::uid://nq2wcn6y1og4
+player.gd::GDScript::-1::1678823875::0::1::::<>CharacterBody3D<>::
+player.tscn::PackedScene::7149306589434746652::1678877783::0::1::::<><>::res://player.gd<>uid://bt5ugrjv3r6hv<>uid://d0foneqcruydx
+ScoreLabel.gd::GDScript::-1::1678618268::0::1::::<>Label<>::
+::res://art/::1676829557
+body.material::StandardMaterial3D::-1::1605908508::0::1::::<><>::
+eye.material::StandardMaterial3D::-1::1606514142::0::1::::<><>::
+House In a Forest Loop.ogg::AudioStreamOggVorbis::947163784200745873::1580874009::1676829557::1::::<><>::
+mob.glb::PackedScene::2280742307389848135::1606513980::1676829557::1::::<><>::
+mob_body.material::StandardMaterial3D::-1::1606514142::0::1::::<><>::
+mob_eye.material::StandardMaterial3D::-1::1605969815::0::1::::<><>::
+player.glb::PackedScene::3783166007848726055::1606514058::1676829557::1::::<><>::
+pupil.material::StandardMaterial3D::-1::1606514142::0::1::::<><>::
+::res://fonts/::1676829581
+LICENSE.txt::TextFile::-1::1605988452::0::1::::<><>::
+Montserrat-Medium.ttf::FontFile::8943424107764301648::1323702000::1676829581::1::::<><>::
