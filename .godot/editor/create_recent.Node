@@ -1,3 +1,4 @@
+Timer
 Label
 AnimationPlayer
 AudioStreamPlayer2D
@@ -5,7 +6,6 @@ ColorRect
 Control
 CollisionShape3D
 Area3D
-Timer
 PathFollow3D
 Path3D
 MeshInstance3D

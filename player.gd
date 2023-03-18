@@ -6,12 +6,15 @@ extends CharacterBody3D
 @export var bounce_impulse = 20
 
 var target_velocity = Vector3.ZERO
+var combo_more_than_1 = 0
+
 signal hit
+signal combo_add
+signal combo_break
 
 func die():
 	hit.emit()
 	queue_free()
-	
 
 func _physics_process(delta):
 
@@ -32,6 +35,7 @@ func _physics_process(delta):
 		$Pivot.look_at(position + direction, Vector3.UP)
 	else:
 		$Pivot/Character/AnimationPlayer.speed_scale = 1
+	
 	if not is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
 	
@@ -51,6 +55,7 @@ func _physics_process(delta):
 			
 			if Vector3.UP.dot(collision.get_normal()) > 0.1:
 				mob.squash()
+
 				target_velocity.y = bounce_impulse
 				await get_tree().create_timer(0.01).timeout
 		
@@ -60,7 +65,17 @@ func _physics_process(delta):
 	position.z = clamp(position.z, -17.5, 19)
 	
 	$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
-
+	
+	if Input.is_action_just_pressed("combo_add"):
+		combo_more_than_1 += 1
+		if combo_more_than_1 > 1:
+			combo_add.emit()
+			
+	if Input.is_action_just_pressed("combo_break"):
+		combo_more_than_1 = 0
+		combo_break.emit()
 
 func _on_mob_detector_body_entered(body):
 	die()
+
+
