@@ -7,6 +7,7 @@ extends CharacterBody3D
 
 var target_velocity = Vector3.ZERO
 var combo_more_than_1 = 0
+var on_combo = false
 
 signal hit
 signal combo_add
@@ -39,6 +40,9 @@ func _physics_process(delta):
 	if not is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
 	
+	if position.y < 0.68:
+		combo_more_than_1 = 0
+		combo_break.emit()
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		target_velocity.y = jump_impulse
 
@@ -55,9 +59,15 @@ func _physics_process(delta):
 			
 			if Vector3.UP.dot(collision.get_normal()) > 0.1:
 				mob.squash()
+				combo_more_than_1 += 1
+				if combo_more_than_1 > 1:
+					combo_add.emit()
+					on_combo = true
+					print("combo more than 1: %s" % combo_more_than_1)
 
 				target_velocity.y = bounce_impulse
 				await get_tree().create_timer(0.01).timeout
+		
 		
 	velocity = target_velocity
 	move_and_slide()

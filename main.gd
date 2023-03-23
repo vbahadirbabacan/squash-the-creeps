@@ -40,3 +40,8 @@ func _on_player_combo_break():
 	if combo_var > 1:
 		$UserInterface/ScoreLabel.update_score(combo_var)
 	$UserInterface/ComboLabel.on_combo_end()
+
+
+func _on_debug_timer_timeout():
+	if $Player != null:
+		print($Player.position.y)

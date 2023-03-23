@@ -2,7 +2,5 @@ res://main.tscn
 res://mob.tscn
 res://player.tscn
 res://music_player.tscn
-res://ComboLabel.gd
 res://player.gd
 res://main.gd
-res://ScoreLabel.gd

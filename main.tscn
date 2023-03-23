@@ -119,10 +119,10 @@ script = ExtResource("5_565m0")
 [node name="Player" parent="." groups=["mob"] instance=ExtResource("1_82vot")]
 collision_mask = 5
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="Ground" type="StaticBody3D" parent="." groups=["world"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 collision_layer = 4
-collision_mask = 0
+collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_ffcch")
@@ -173,7 +173,12 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.98
 wait_time = 0.5
 autostart = true
 
+[node name="DebugTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
 [connection signal="combo_add" from="Player" to="." method="_on_player_combo_add"]
 [connection signal="combo_break" from="Player" to="." method="_on_player_combo_break"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="DebugTimer" to="." method="_on_debug_timer_timeout"]
